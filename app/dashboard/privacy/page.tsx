@@ -8,7 +8,7 @@ const RichTextEditor = dynamic(() => import("@/components/ui/RichTextEditor"), {
 
 const BASE_URL = "https://social-platform-backend-a4zd.onrender.com";
 const getAdminToken = () =>
-  localStorage.getItem("token") || localStorage.getItem("kick_admin_token") || "";
+  localStorage.getItem("kick_admin_token") || "";
 
 const ENDPOINTS: Record<"user" | "general", string> = { // Renamed for social platform context
   user: "/api/admin/legal/privacy_policy_user", // Assuming these endpoints will be updated on backend

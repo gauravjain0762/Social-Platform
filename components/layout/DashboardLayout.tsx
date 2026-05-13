@@ -19,7 +19,7 @@ export default function DashboardLayout({ children, title }: LayoutProps) {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("kick_admin_token");
 
     if (!token) {
       router.push("/login");

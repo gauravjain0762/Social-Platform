@@ -13,13 +13,9 @@ export default function Header({ title }: HeaderProps) {
   const search = useAppSelector((s) => s.ui.globalSearch);
   const collapsed = useAppSelector((s) => s.ui.sidebarCollapsed);
   const handleLogout = () => {
-  // remove tokens
-  localStorage.removeItem("token");
-  localStorage.removeItem("pulse_admin_token");
-
-  // redirect to login page
-  window.location.href = "/login"; 
-};
+    localStorage.removeItem("kick_admin_token");
+    window.location.href = "/login";
+  };
 
   return (
     <header

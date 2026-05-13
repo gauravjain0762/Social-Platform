@@ -1,45 +1,30 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { toggleSidebar } from "@/store/slices/uiSlice";
 import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard, Stethoscope, Building2, Users, Calendar,
-  ListOrdered, ShieldCheck, CreditCard, MapPin, Star,
-  Bell, HeadphonesIcon, BarChart3, FileText, Settings,
-  UserCog, ChevronLeft, ChevronRight, ChevronDown, Activity, Smartphone, Package,
+  LayoutDashboard, Users, CreditCard,
+  HeadphonesIcon, Settings,
+  ChevronLeft, ChevronRight, ChevronDown, Activity, Package,
 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Doctors", href: "/dashboard/doctors", icon: Stethoscope },
+  { label: "Users", href: "/dashboard/users", icon: Users },
   { label: "Plans", href: "/dashboard/plans", icon: Package },
-  // { label: "Clinics", href: "/clinics", icon: Building2 },
-  // { label: "Patients", href: "/patients", icon: Users },
-  { label: "Appointments", href: "/appointments", icon: Calendar },
-  // { label: "Queue", href: "/queue", icon: ListOrdered },
-  // { label: "Verification", href: "/verification", icon: ShieldCheck },
   { label: "Revenue", href: "/payments", icon: CreditCard },
-  // { label: "Reviews", href: "/reviews", icon: Star },
-  // { label: "Notifications", href: "/notifications", icon: Bell },
   { label: "Support", href: "/support", icon: HeadphonesIcon },
   { label: "Settings", href: "/dashboard/app-settings", icon: Settings },
-  // { label: "Reports", href: "/reports", icon: BarChart3 },
-  // { label: "Content", href: "/content", icon: FileText },
-  // { label: "Admin Users", href: "/admin-users", icon: UserCog },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const collapsed = useAppSelector((s) => s.ui.sidebarCollapsed);
-  const [openDoctors, setOpenDoctors] = useState(
-    pathname.startsWith("/dashboard/doctors")
-  );
   const [openSettings, setOpenSettings] = useState(
     pathname.startsWith("/dashboard/app-settings") ||
     pathname.startsWith("/dashboard/terms") ||
@@ -47,7 +32,7 @@ export default function Sidebar() {
   );
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("kick_admin_token");
     router.push("/login");
   };
 
@@ -83,80 +68,6 @@ export default function Sidebar() {
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-2 px-2 scrollbar-thin">
         {navItems.map(({ label, href, icon: Icon }) => {
-          if (label === "Doctors") {
-            const active = pathname.startsWith("/dashboard/doctors");
-
-            return (
-              <div key={href}>
-                {/* Main Doctors Button */}
-                <div
-                  onClick={() => setOpenDoctors(!openDoctors)}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-lg mb-0.5 cursor-pointer transition-all",
-                    active
-                      ? "bg-accent-red-glow text-accent-red-light border border-accent-red/20"
-                      : "text-text-secondary hover:text-text-primary hover:bg-bg-hover"
-                  )}
-                >
-                  <Icon size={16} />
-                  {!collapsed && (
-                    <>
-                      <span className="text-sm font-medium flex-1">Doctors</span>
-                      <ChevronDown
-                        size={14}
-                        className={cn(
-                          "transition-transform",
-                          openDoctors && "rotate-180"
-                        )}
-                      />
-                    </>
-                  )}
-                </div>
-
-                {/* Dropdown */}
-                {openDoctors && !collapsed && (
-                  <div className="ml-6 mt-1 space-y-1">
-                    <Link
-                      href="/dashboard/doctors?status=active"
-                      className={cn(
-                        "block px-3 py-1.5 text-sm rounded-md",
-                        pathname === "/dashboard/doctors" && searchParams.get("status") === "active"
-                          ? "text-accent-red"
-                          : "text-text-muted hover:text-text-primary"
-                      )}
-                    >
-                      Active Doctors
-                    </Link>
-
-                    <Link
-                      href="/dashboard/doctors?status=inactive"
-                      className={cn(
-                        "block px-3 py-1.5 text-sm rounded-md",
-                        pathname === "/dashboard/doctors" && searchParams.get("status") === "inactive"
-                          ? "text-accent-red"
-                          : "text-text-muted hover:text-text-primary"
-                      )}
-                    >
-                      Inactive Doctors
-                    </Link>
-
-                    <Link
-                      href="/dashboard/doctors/requests"
-                      className={cn(
-                        "block px-3 py-1.5 text-sm rounded-md",
-                        pathname === "/dashboard/doctors/requests"
-                          ? "text-accent-red"
-                          : "text-text-muted hover:text-text-primary"
-                      )}
-                    >
-                      Doctor Requests
-                    </Link>
-                  </div>
-                )}
-              </div>
-            );
-          }
-
           if (label === "Settings") {
             const active = pathname.startsWith("/dashboard/app-settings");
             return (
