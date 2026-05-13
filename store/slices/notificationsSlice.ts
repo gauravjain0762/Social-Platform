@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Notification } from "@/types";
 import { dummyNotifications } from "@/lib/dummyData";
 
-interface NotificationsState {
+interface NotificationsState { // No change to BASE_URL here as it uses dummy data
   list: Notification[];
   loading: boolean;
   sending: boolean;
@@ -28,7 +28,7 @@ export const sendBroadcast = createAsyncThunk(
   async (payload: {
     title: string;
     message: string;
-    audience: string;
+    audience: Notification["audience"]; // Updated to use Notification["audience"] type
     channels: string[];
     schedule: "now" | "later";
   }) => {

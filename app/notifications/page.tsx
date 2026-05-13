@@ -15,7 +15,7 @@ export default function NotificationsPage() {
   const [form, setForm] = useState({
     title: "",
     message: "",
-    audience: "Doctors",
+    audience: "Users", // Changed default audience
     schedule: "now" as "now" | "later",
     channels: [] as string[],
   });
@@ -31,7 +31,7 @@ export default function NotificationsPage() {
 
   const handleSubmit = () => {
     if (!form.title || !form.message || form.channels.length === 0) return;
-    dispatch(sendBroadcast({ ...form })).then(() => {
+    dispatch(sendBroadcast({ ...form, audience: form.audience as any })).then(() => { // Cast audience to match Notification["audience"]
       setForm({ title: "", message: "", audience: "Doctors", schedule: "now", channels: [] });
     });
   };
@@ -79,7 +79,7 @@ export default function NotificationsPage() {
       <div className="animate-fade-in">
         <PageHeader
           title="Broadcast Center"
-          subtitle="Dispatch high-priority alerts and system-wide notifications across all clinical channels."
+          subtitle="Dispatch high-priority alerts and system-wide notifications across all social channels." // Updated subtitle
           stats={
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl border border-border-default bg-bg-card text-center">
@@ -127,7 +127,7 @@ export default function NotificationsPage() {
                     onChange={(e) => setForm((f) => ({ ...f, audience: e.target.value }))}
                     className="w-full h-10 px-3 bg-bg-elevated border border-border-default rounded-lg text-sm text-text-primary focus:outline-none focus:border-accent-red/50 appearance-none cursor-pointer"
                   >
-                    {["Doctors", "Patients", "All Users", "Clinics"].map((a) => (
+                    {["Users", "Creators", "Moderators", "All"].map((a) => ( // Updated audience options
                       <option key={a} value={a} className="bg-bg-elevated">{a}</option>
                     ))}
                   </select>
@@ -141,8 +141,8 @@ export default function NotificationsPage() {
                         onClick={() => setForm((f) => ({ ...f, schedule: s }))}
                         className={cn(
                           "flex-1 h-10 rounded-lg border text-sm font-medium transition-all capitalize",
-                          form.schedule === s
-                            ? "bg-bg-elevated border-accent-red/40 text-text-primary"
+                          form.schedule === s // Changed accent-red to blue-600
+                            ? "bg-bg-elevated border-blue-600/40 text-text-primary"
                             : "border-border-default text-text-muted hover:text-text-primary"
                         )}
                       >
@@ -162,8 +162,8 @@ export default function NotificationsPage() {
                       onClick={() => toggleChannel(ch.key)}
                       className={cn(
                         "p-4 rounded-xl border flex flex-col items-center gap-2 transition-all",
-                        form.channels.includes(ch.key)
-                          ? "border-accent-red/40 bg-accent-red-glow text-accent-red-light"
+                        form.channels.includes(ch.key) // Changed accent-red to blue-600
+                          ? "border-blue-600/40 bg-blue-600/10 text-blue-400"
                           : "border-border-default bg-bg-elevated text-text-secondary hover:border-accent-red/20 hover:text-text-primary"
                       )}
                     >
@@ -224,9 +224,9 @@ export default function NotificationsPage() {
 
             <div className="rounded-xl border border-border-subtle overflow-hidden">
               <div className="p-4 bg-gradient-to-br from-bg-elevated to-bg-card">
-                <p className="text-text-muted text-[10px] uppercase tracking-wider mb-1">Clinical Tip</p>
-                <p className="text-white font-bold text-sm">Optimizing Open Rates</p>
-                <p className="text-text-secondary text-xs mt-2">Broadcasts sent between 8:00 AM and 9:30 AM have a 40% higher doctor engagement rate.</p>
+                <p className="text-text-muted text-[10px] uppercase tracking-wider mb-1">Engagement Tip</p> {/* Updated tip */}
+                <p className="text-white font-bold text-sm">Optimizing Engagement Rates</p> {/* Updated tip */}
+                <p className="text-text-secondary text-xs mt-2">Broadcasts sent between 8:00 AM and 9:30 AM have a 40% higher user engagement rate.</p> {/* Updated tip */}
                 <button className="mt-3 h-7 px-3 rounded-lg border border-border-default text-text-secondary text-xs hover:text-text-primary transition-all">
                   Read Guidelines
                 </button>

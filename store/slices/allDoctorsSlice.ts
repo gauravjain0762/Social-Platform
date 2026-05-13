@@ -1,8 +1,8 @@
-﻿import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+﻿﻿import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const BASE_URL = "https://hospital-saas-backend.onrender.com";
+const BASE_URL = "https://social-platform-backend-a4zd.onrender.com";
 const getAdminToken = () =>
-  localStorage.getItem("token") || localStorage.getItem("pulse_admin_token") || "";
+  localStorage.getItem("token") || localStorage.getItem("kick_admin_token") || "";
 
 const mapUser = (user: any) => ({
   id: user._id,

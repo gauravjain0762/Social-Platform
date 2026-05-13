@@ -84,12 +84,12 @@ export default function ReviewsPage() {
       <div className="animate-fade-in">
         <PageHeader
           title="Reviews & Complaints"
-          subtitle="Manage practitioner feedback and clinical disputes. All reports are timestamped and logged."
+          subtitle="Manage user feedback and content disputes. All reports are timestamped and logged." // Updated subtitle
           stats={
             <div className="flex items-center gap-4">
               <div className="p-3 rounded-xl border border-border-default bg-bg-card text-center min-w-[80px]">
                 <p className="text-white font-bold text-xl">{pendingReviews}</p>
-                <p className="text-text-muted text-[10px] uppercase tracking-wider">Pending Review</p>
+                <p className="text-text-muted text-[10px] uppercase tracking-wider">Pending Moderation</p> {/* Updated text */}
               </div>
               <div className="p-3 rounded-xl border border-border-default bg-bg-card text-center min-w-[80px]">
                 <p className="text-white font-bold text-xl">{flaggedRatio}%</p>
@@ -121,13 +121,13 @@ export default function ReviewsPage() {
           {/* Urgent dispute */}
           <SectionCard>
             <div className="mb-3">
-              <span className="px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-red-500/10 border border-red-500/20 text-red-400">
+              <span className="px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-red-500/10 border border-red-500/20 text-red-400"> {/* Keep red for critical */}
                 Critical Action
               </span>
             </div>
-            <h3 className="text-white font-bold text-lg mb-2">Urgent Dispute</h3>
-            <p className="text-text-secondary text-sm mb-4">
-              Complaint #4902 involves a severe clinical error allegation. Medical legal review required within 4 hours.
+            <h3 className="text-white font-bold text-lg mb-2">Urgent Content Review</h3> {/* Updated title */}
+            <p className="text-text-secondary text-sm mb-4"> 
+              Report #4902 involves a severe platform policy violation. Legal/Trust & Safety review required within 4 hours. {/* Updated text */}
             </p>
             <button className="w-full h-10 rounded-xl bg-gradient-accent text-white text-sm font-semibold hover:opacity-90 transition-opacity">
               Investigate Now
@@ -144,8 +144,8 @@ export default function ReviewsPage() {
                   key={tab}
                   onClick={() => setActiveTab(tab as "all" | "flagged" | "resolved")}
                   className={`text-sm font-medium pb-1 border-b-2 transition-all ${
-                    activeTab === tab
-                      ? "text-text-primary border-accent-red"
+                    activeTab === tab // Changed accent-red to blue-600
+                      ? "text-text-primary border-blue-600"
                       : "text-text-muted border-transparent hover:text-text-secondary"
                   }`}
                 >
@@ -170,10 +170,10 @@ export default function ReviewsPage() {
 
         {/* Bottom: Moderator log + Resolution template */}
         <div className="grid grid-cols-2 gap-4 mt-4">
-          <SectionCard title="Moderator Activity Log">
+          <SectionCard title="Admin Activity Log"> {/* Changed title */}
             <div className="space-y-3">
               {[
-                { dot: "emerald", title: "Resolved Complaint #4102", sub: "Assigned credit to Patient Elena R.", time: "2 minutes ago" },
+                { dot: "emerald", title: "Resolved Report #4102", sub: "Assigned credit to User Elena R.", time: "2 minutes ago" }, // Updated text
                 { dot: "red", title: "Flagged Review #8821", sub: "Violation of safety guidelines.", time: "1 hour ago" },
                 { dot: "gray", title: "Session Start", sub: "Admin login from NY Server.", time: "3 hours ago" },
               ].map((item, i) => (
@@ -192,7 +192,7 @@ export default function ReviewsPage() {
 
           <SectionCard title="Quick Resolution Template">
             <textarea
-              defaultValue={`"We appreciate your feedback regarding your experience with [Doctor Name]. We have reviewed the case and [Resolution Action]. Thank you for your patience."`}
+              defaultValue={`"We appreciate your feedback regarding your experience with [User Name]. We have reviewed the case and [Resolution Action]. Thank you for your patience."`} // Updated text
               className="w-full h-24 px-3 py-2 bg-bg-elevated border border-border-default rounded-lg text-sm text-text-secondary resize-none focus:outline-none focus:border-accent-red/50 mb-3"
             />
             <div className="flex gap-2 mb-4">
@@ -204,8 +204,8 @@ export default function ReviewsPage() {
                 <Star size={14} />
               </div>
               <div>
-                <p className="text-text-primary text-sm font-medium">Need Peer Review?</p>
-                <p className="text-text-muted text-xs">Escalate complex complaints to the Medical Ethics Committee.</p>
+                <p className="text-text-primary text-sm font-medium">Need Trust & Safety Review?</p> {/* Updated text */}
+                <p className="text-text-muted text-xs">Escalate complex complaints to the Trust & Safety Committee.</p> {/* Updated text */}
               </div>
               <button className="ml-auto h-8 px-3 rounded-lg bg-gradient-accent text-white text-xs font-medium hover:opacity-90">
                 Request Review

@@ -8,12 +8,12 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("kick_admin_token");
     if (token) router.push("/dashboard");
   }, []);
 
-  const [email, setEmail] = useState("admin@saas.com");
-  const [password, setPassword] = useState("Admin@123");
+  const [email, setEmail] = useState("kick@admin.com");
+  const [password, setPassword] = useState("kick@123");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -22,8 +22,7 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(
-        "https://hospital-saas-backend.onrender.com/api/auth/admin-login",
+      const res = await fetch("https://social-platform-backend-a4zd.onrender.com/api/auth/admin/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -32,7 +31,7 @@ export default function LoginPage() {
       );
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("kick_admin_token", data.token);
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
@@ -46,40 +45,30 @@ export default function LoginPage() {
       {/* Left panel — branding */}
       <div className="hidden lg:flex flex-col justify-between w-[45%] bg-[#0f0f0f] border-r border-[#1f1f1f] p-10">
         <div className="flex items-center gap-3">
-          <img
-            src="https://res.cloudinary.com/dbazlbkfj/image/upload/v1777037423/motion.div_dyp8fc.png"
-            alt="Queue Token"
-            className="w-9 h-9 rounded-xl object-contain"
-          />
-          <span className="text-white font-bold text-lg">Queue Token</span>
+          <span className="text-white font-bold text-lg">Kick-Analyst</span>
         </div>
 
         <div>
           <div className="mb-8">
-            <img
-              src="https://res.cloudinary.com/dbazlbkfj/image/upload/v1777037423/motion.div_dyp8fc.png"
-              alt="Queue Token"
-              className="w-20 h-20 rounded-2xl object-contain mb-6"
-            />
             <h2 className="text-3xl font-bold text-white leading-tight mb-3">
-              Precision Admin<br />for Clinical Networks
+              Connecting Communities<br />Through Precision Data
             </h2>
             <p className="text-[#666] text-sm leading-relaxed max-w-xs">
-              Manage doctors, appointments, and patient queues across your entire clinical network from one place.
+              Manage your social ecosystem, moderate content, and analyze user engagement across your entire network from one unified hub.
             </p>
           </div>
 
           <div className="space-y-3">
-            {["Doctor onboarding & verification", "Real-time appointment tracking", "Patient queue management"].map((item) => (
+            {["Community moderation & safety", "Viral trend analytics", "User growth & engagement tracking"].map((item) => (
               <div key={item} className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
                 <span className="text-[#888] text-sm">{item}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <p className="text-[#444] text-xs">© 2026 Queue Token · Pulse Clinical</p>
+        <p className="text-[#444] text-xs">© 2026 Kick-Analyst · Social Analyst</p>
       </div>
 
       {/* Right panel — login form */}
@@ -87,12 +76,7 @@ export default function LoginPage() {
         <div className="w-full max-w-[400px]">
           {/* Mobile logo */}
           <div className="flex items-center gap-3 mb-10 lg:hidden">
-            <img
-              src="https://res.cloudinary.com/dbazlbkfj/image/upload/v1777037423/motion.div_dyp8fc.png"
-              alt="Queue Token"
-              className="w-9 h-9 rounded-xl object-contain"
-            />
-            <span className="text-white font-bold text-lg">Queue Token</span>
+            <span className="text-white font-bold text-lg">Kick-Analyst</span>
           </div>
 
 
@@ -102,7 +86,7 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="mb-5 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+            <div className="mb-5 px-4 py-3 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm">
               {error}
             </div>
           )}
@@ -119,7 +103,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-                  className="w-full pl-10 pr-4 py-2.5 bg-[#141414] border border-[#2a2a2a] rounded-lg text-white text-sm placeholder-[#555] focus:outline-none focus:border-red-500 transition-colors"
+                  className="w-full pl-10 pr-4 py-2.5 bg-[#141414] border border-[#2a2a2a] rounded-lg text-white text-sm placeholder-[#555] focus:outline-none focus:border-blue-600 transition-colors"
                 />
               </div>
             </div>
@@ -135,7 +119,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-                  className="w-full pl-10 pr-10 py-2.5 bg-[#141414] border border-[#2a2a2a] rounded-lg text-white text-sm placeholder-[#555] focus:outline-none focus:border-red-500 transition-colors"
+                  className="w-full pl-10 pr-10 py-2.5 bg-[#141414] border border-[#2a2a2a] rounded-lg text-white text-sm placeholder-[#555] focus:outline-none focus:border-blue-600 transition-colors"
                 />
                 <button
                   type="button"
@@ -151,7 +135,7 @@ export default function LoginPage() {
             <button
               onClick={handleLogin}
               disabled={loading}
-              className="w-full py-2.5 mt-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-lg transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-2.5 mt-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20"
             >
               {loading ? (
                 <>
@@ -166,7 +150,7 @@ export default function LoginPage() {
           </div>
 
           <p className="text-center text-[#444] text-xs mt-8">
-            Pulse Clinical Admin Panel · v1.0
+            KickLink Admin Dashboard · v1.0
           </p>
         </div>
       </div>

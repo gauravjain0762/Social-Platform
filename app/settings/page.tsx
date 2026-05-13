@@ -35,7 +35,7 @@ export default function SettingsPage() {
                       "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-sm",
                       activeTab === id
                         ? "bg-accent-red-glow text-accent-red-light border border-accent-red/20"
-                        : "text-text-secondary hover:text-text-primary hover:bg-bg-hover"
+                        : "text-text-secondary hover:text-text-primary hover:bg-bg-hover" // Keep hover color consistent
                     )}
                   >
                     <Icon size={15} className={activeTab === id ? "text-accent-red" : "text-current"} />
@@ -57,31 +57,31 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     <p className="text-white font-semibold">Dr. Aris Thorne</p>
-                    <p className="text-text-muted text-sm">Chief Administrator</p>
-                    <button className="mt-1 text-accent-red text-xs hover:underline">Change Avatar</button>
+                    <p className="text-text-muted text-sm">Platform Administrator</p> {/* Updated role */}
+                    <button className="mt-1 text-blue-500 text-xs hover:underline">Change Avatar</button> {/* Changed color */}
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     { label: "First Name", value: "Aris", type: "text" },
                     { label: "Last Name", value: "Thorne", type: "text" },
-                    { label: "Email Address", value: "aris.thorne@pulseclinical.com", type: "email" },
+                    { label: "Email Address", value: "aris.thorne@kick-analyst.com", type: "email" }, // Updated email
                     { label: "Phone Number", value: "+1 555-0100", type: "tel" },
                     { label: "Role", value: "Chief Administrator", type: "text" },
-                    { label: "Department", value: "Clinical Operations", type: "text" },
+                    { label: "Department", value: "Platform Operations", type: "text" }, // Updated department
                   ].map((field) => (
                     <div key={field.label}>
                       <label className="text-text-muted text-xs uppercase tracking-wider block mb-2">{field.label}</label>
                       <input
                         type={field.type}
                         defaultValue={field.value}
-                        className="w-full h-9 px-3 bg-bg-elevated border border-border-default rounded-lg text-sm text-text-primary focus:outline-none focus:border-accent-red/50 transition-colors"
+                        className="w-full h-9 px-3 bg-bg-elevated border border-border-default rounded-lg text-sm text-text-primary focus:outline-none focus:border-blue-500/50 transition-colors" // Changed color
                       />
                     </div>
                   ))}
                 </div>
                 <div className="mt-6 flex gap-3">
-                  <button className="h-9 px-6 rounded-xl bg-gradient-accent text-white text-sm font-medium hover:opacity-90 shadow-accent-glow">Save Changes</button>
+                  <button className="h-9 px-6 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium hover:opacity-90 shadow-lg shadow-blue-900/20">Save Changes</button> {/* Changed color */}
                   <button className="h-9 px-6 rounded-xl border border-border-default text-text-secondary text-sm hover:text-text-primary transition-all">Cancel</button>
                 </div>
               </SectionCard>
@@ -91,11 +91,11 @@ export default function SettingsPage() {
               <SectionCard title="Notification Preferences" subtitle="Configure how and when you receive system alerts.">
                 <div className="space-y-4">
                   {[
-                    { label: "Doctor Verification Alerts", sub: "Get notified when new doctors submit documents for verification.", enabled: true },
+                    { label: "User Verification Alerts", sub: "Get notified when new users submit documents for verification.", enabled: true }, // Updated text
                     { label: "Critical System Alerts", sub: "Receive alerts for system health issues and security events.", enabled: true },
                     { label: "Revenue Milestones", sub: "Notifications for significant revenue events and anomalies.", enabled: false },
                     { label: "Support Ticket Escalations", sub: "Alert when support tickets are escalated to critical priority.", enabled: true },
-                    { label: "Patient Complaints", sub: "Immediate alerts for flagged patient complaints and negative reviews.", enabled: true },
+                    { label: "User Feedback Alerts", sub: "Immediate alerts for flagged user feedback and negative reviews.", enabled: true }, // Updated text
                   ].map((item) => (
                     <div key={item.label} className="flex items-center justify-between p-4 rounded-xl border border-border-subtle bg-bg-elevated">
                       <div>
@@ -105,8 +105,8 @@ export default function SettingsPage() {
                       <div
                         className={cn(
                           "w-10 h-6 rounded-full border transition-all cursor-pointer relative",
-                          item.enabled
-                            ? "bg-accent-red border-accent-red"
+                          item.enabled // Changed accent-red to blue-600
+                            ? "bg-blue-600 border-blue-600"
                             : "bg-bg-card border-border-default"
                         )}
                       >
@@ -127,14 +127,14 @@ export default function SettingsPage() {
                   <div className="p-4 rounded-xl border border-border-subtle bg-bg-elevated">
                     <p className="text-text-primary font-medium mb-1">Two-Factor Authentication</p>
                     <p className="text-text-muted text-sm mb-3">Add an extra layer of security to your account.</p>
-                    <button className="h-8 px-4 rounded-lg bg-gradient-accent text-white text-xs font-medium hover:opacity-90">Enable 2FA</button>
+                    <button className="h-8 px-4 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white text-xs font-medium hover:opacity-90">Enable 2FA</button> {/* Changed color */}
                   </div>
                   <div className="p-4 rounded-xl border border-border-subtle bg-bg-elevated">
                     <p className="text-text-primary font-medium mb-1">Change Password</p>
                     <p className="text-text-muted text-sm mb-3">Last changed 30 days ago.</p>
                     <div className="grid grid-cols-2 gap-3">
-                      <input type="password" placeholder="Current password" className="h-9 px-3 bg-bg-card border border-border-default rounded-lg text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-red/50" />
-                      <input type="password" placeholder="New password" className="h-9 px-3 bg-bg-card border border-border-default rounded-lg text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-red/50" />
+                      <input type="password" placeholder="Current password" className="h-9 px-3 bg-bg-card border border-border-default rounded-lg text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-blue-500/50" /> {/* Changed color */}
+                      <input type="password" placeholder="New password" className="h-9 px-3 bg-bg-card border border-border-default rounded-lg text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-blue-500/50" /> {/* Changed color */}
                     </div>
                     <button className="mt-3 h-8 px-4 rounded-lg border border-border-default text-text-secondary text-xs hover:text-text-primary transition-all">Update Password</button>
                   </div>

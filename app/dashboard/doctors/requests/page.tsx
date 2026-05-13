@@ -164,7 +164,7 @@ const handleDeleteSelected = async () => {
 },
     {
       key: "name",
-      label: "Doctor Name",
+      label: "User Name", // Changed from Doctor Name
       render: (d: any) => (
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-gradient-accent flex items-center justify-center text-white text-xs font-bold shrink-0">
@@ -181,7 +181,7 @@ const handleDeleteSelected = async () => {
       key: "specialization",
       label: "Specialization",
       render: (d: any) => (
-        <span className="px-2 py-0.5 rounded text-xs font-semibold bg-accent-red-glow text-accent-red-light border border-accent-red/20 uppercase tracking-wider">
+        <span className="px-2 py-0.5 rounded text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase tracking-wider"> {/* Changed color */}
           {d.specialization}
         </span>
       ),
@@ -251,31 +251,20 @@ const handleDeleteSelected = async () => {
   ];
 
   const summaryCards = [
-    // {
-    //   label: "Pending Requests",
-    //   value: list.length,
-    //   change: 0,
-    //   icon: <ShieldCheck size={16} />,
-    // },
+    {
+      label: "Pending Requests",
+      value: list.length,
+      change: 0, // Placeholder, actual change logic would be more complex
+      icon: <ShieldCheck size={16} />,
+    },
   ];
 
   return (
     <DashboardLayout>
       <div className="animate-fade-in">
         <PageHeader
-          title="Doctor Requests"
-          subtitle="Manage pending doctor verification requests."
-          // actions={
-          //   <>
-          //     {/* <button className="h-9 px-4 rounded-lg border border-border-default text-text-secondary text-sm hover:text-text-primary hover:border-accent-red/30 transition-all flex items-center gap-2">
-          //       <Download size={14} />
-          //       Export Reports
-          //     </button>
-          //     <button className="h-9 px-4 rounded-lg bg-gradient-accent text-white text-sm font-medium flex items-center gap-2 hover:opacity-90 shadow-accent-glow">
-          //       <Plus size={14} />
-          //       Add New Doctor
-          //     </button> */}
-          //   </>
+          title="User Verification Requests" // Changed from Doctor Requests
+          subtitle="Manage pending user verification requests." // Changed from doctor verification requests
           actions={
   deleteMode ? (
     <div className="flex items-center gap-2">
@@ -285,7 +274,7 @@ const handleDeleteSelected = async () => {
           className="h-9 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium flex items-center gap-2 transition"
         >
           <Trash2 size={14} />
-          Delete {selectedIds.length} request{selectedIds.length > 1 ? "s" : ""}
+          Delete {selectedIds.length} user request{selectedIds.length > 1 ? "s" : ""} {/* Changed text */}
         </button>
       )}
       <button
@@ -309,8 +298,8 @@ const handleDeleteSelected = async () => {
 
         <SectionCard noPadding className="mb-6">
           <div className="p-4 border-b border-border-subtle">
-            <p className="text-text-muted text-sm">
-              Showing all pending doctor requests
+            <p className="text-text-muted text-sm"> 
+              Showing all pending user verification requests
             </p>
           </div>
 
@@ -322,7 +311,7 @@ const handleDeleteSelected = async () => {
                 columns={columns}
                 data={paginated}
                 keyExtractor={(d) => getDoctorId(d)}
-                emptyMessage="No doctors found matching your filters"
+                emptyMessage="No user requests found matching your filters" // Changed text
               />
               <div className="flex items-center justify-between px-4 py-3 border-t border-border-subtle">
                 <p className="text-text-muted text-xs">
@@ -355,7 +344,7 @@ const handleDeleteSelected = async () => {
         <div className="fixed top-0 right-0 w-[400px] h-full bg-black border-l border-gray-800 p-4 overflow-y-auto z-50">
           <button onClick={() => setSelectedDoctor(null)}>Close</button>
 
-          <h2 className="text-lg font-bold mb-4">Doctor Details</h2>
+          <h2 className="text-lg font-bold mb-4">User Details</h2> {/* Changed title */}
 
           <p>
             <b>Name:</b> {selectedDoctor.name}
@@ -377,7 +366,7 @@ const handleDeleteSelected = async () => {
             target="_blank"
             rel="noreferrer"
           >
-            Medical License
+            Verification Document {/* Changed text */}
           </a>
 
           <h3 className="mt-4 font-semibold">Bank</h3>
@@ -391,8 +380,8 @@ const handleDeleteSelected = async () => {
           <div className="bg-bg-card border border-border-default rounded-xl shadow-2xl w-full max-w-lg p-6 animate-fade-in">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-text-primary font-semibold text-lg">
-                Reject Doctor
+              <h2 className="text-text-primary font-semibold text-lg"> 
+                Reject User Request
               </h2>
               <button
                 onClick={() => setRejectModal({ open: false, doctorId: null })}
@@ -403,7 +392,7 @@ const handleDeleteSelected = async () => {
             </div>
 
             <p className="text-text-secondary text-sm mb-4">
-              Add one or more rejection reasons with the step they belong to.
+              Add one or more rejection reasons for the user's verification request.
             </p>
 
             {/* Rejection rows */}
@@ -416,7 +405,7 @@ const handleDeleteSelected = async () => {
                     onChange={(e) =>
                       updateRejection(i, "step", Number(e.target.value))
                     }
-                    className="h-9 rounded-lg border border-border-default bg-bg-card text-text-primary text-sm px-2 focus:outline-none focus:border-accent-red/50 shrink-0"
+                    className="h-9 rounded-lg border border-border-default bg-bg-card text-text-primary text-sm px-2 focus:outline-none focus:border-blue-500/50 shrink-0" // Changed color
                     style={{ backgroundColor: "#1a1a1a", color: "#fff" }}
                   >
                     {STEPS.map((s) => (
@@ -436,7 +425,7 @@ const handleDeleteSelected = async () => {
   value={r.reason}
   onChange={(e) => updateRejection(i, "reason", e.target.value)}
   placeholder="Reason for rejection..."
-  className="flex-1 h-9 rounded-lg border border-border-default text-sm px-3 focus:outline-none focus:border-accent-red/50 transition-colors"
+  className="flex-1 h-9 rounded-lg border border-border-default text-sm px-3 focus:outline-none focus:border-blue-500/50 transition-colors" // Changed color
   style={{ backgroundColor: "#1a1a1a", color: "#fff" }}
 />
 
@@ -456,7 +445,7 @@ const handleDeleteSelected = async () => {
             {/* Add more */}
             <button
               onClick={addRejection}
-              className="mt-3 text-sm text-accent-red hover:underline flex items-center gap-1"
+              className="mt-3 text-sm text-blue-500 hover:underline flex items-center gap-1" // Changed color
             >
               + Add another reason
             </button>
@@ -490,8 +479,8 @@ const handleDeleteSelected = async () => {
           <Trash2 size={18} className="text-red-500" />
         </div>
         <div>
-          <h2 className="text-white font-semibold">Delete {selectedIds.length} request{selectedIds.length > 1 ? "s" : ""}?</h2>
-          <p className="text-gray-400 text-sm">This will permanently remove the doctor request. This action cannot be undone.</p>
+          <h2 className="text-white font-semibold">Delete {selectedIds.length} user request{selectedIds.length > 1 ? "s" : ""}?</h2> {/* Changed text */}
+          <p className="text-gray-400 text-sm">This will permanently remove the user request. This action cannot be undone.</p> {/* Changed text */}
         </div>
       </div>
       <div className="flex gap-3 justify-end mt-6">

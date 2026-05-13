@@ -1,4 +1,4 @@
-﻿"use client";
+﻿﻿"use client";
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import DashboardLayout from "@/components/layout/DashboardLayout";
@@ -6,13 +6,13 @@ import { Save } from "lucide-react";
 
 const RichTextEditor = dynamic(() => import("@/components/ui/RichTextEditor"), { ssr: false });
 
-const BASE_URL = "https://hospital-saas-backend.onrender.com";
+const BASE_URL = "https://social-platform-backend-a4zd.onrender.com";
 const getAdminToken = () =>
-  localStorage.getItem("token") || localStorage.getItem("pulse_admin_token") || "";
+  localStorage.getItem("token") || localStorage.getItem("kick_admin_token") || "";
 
-const ENDPOINTS: Record<"doctor" | "patient", string> = {
-  doctor: "/api/admin/legal/privacy_policy_doctor",
-  patient: "/api/admin/legal/privacy_policy_patient",
+const ENDPOINTS: Record<"user" | "general", string> = { // Renamed for social platform context
+  user: "/api/admin/legal/privacy_policy_user", // Assuming these endpoints will be updated on backend
+  general: "/api/admin/legal/privacy_policy_general", // Assuming these endpoints will be updated on backend
 };
 
 export default function PrivacyPage() {
@@ -31,14 +31,14 @@ export default function PrivacyPage() {
       setLoadingContent(true);
       try {
         const token = getAdminToken();
-        const [doctorRes, patientRes] = await Promise.all([
-          fetch(`${BASE_URL}${ENDPOINTS.doctor}`, { headers: { Authorization: `Bearer ${token}` } }),
-          fetch(`${BASE_URL}${ENDPOINTS.patient}`, { headers: { Authorization: `Bearer ${token}` } }),
+        const [userRes, generalRes] = await Promise.all([
+          fetch(`${BASE_URL}${ENDPOINTS.user}`, { headers: { Authorization: `Bearer ${token}` } }),
+          fetch(`${BASE_URL}${ENDPOINTS.general}`, { headers: { Authorization: `Bearer ${token}` } }),
         ]);
-        const [doctorData, patientData] = await Promise.all([doctorRes.json(), patientRes.json()]);
+        const [userData, generalData] = await Promise.all([userRes.json(), generalData.json()]);
         setContents({
-          doctor: doctorData.content ?? doctorData.data?.content ?? "",
-          patient: patientData.content ?? patientData.data?.content ?? "",
+          user: userData.content ?? userData.data?.content ?? "",
+          general: generalData.content ?? generalData.data?.content ?? "",
         });
       } catch {
         // silently fail — user can still type and save
@@ -53,13 +53,13 @@ export default function PrivacyPage() {
     setSaving(true);
     setError("");
     try {
-      const res = await fetch(`${BASE_URL}${ENDPOINTS[activeTab]}`, {
+      const res = await fetch(`${BASE_URL}${ENDPOINTS[activeTab as "user" | "general"]}`, { // Cast activeTab
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${getAdminToken()}`,
         },
-        body: JSON.stringify({ content: contents[activeTab] }),
+        body: JSON.stringify({ content: contents[activeTab as "user" | "general"] }), // Cast activeTab
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to save");
@@ -78,14 +78,14 @@ export default function PrivacyPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-white">Privacy &amp; Policy</h1>
-            <p className="text-text-secondary text-sm mt-1">
-              Set privacy policy for doctors and patients shown in the mobile app.
+            <p className="text-text-secondary text-sm mt-1"> 
+              Set privacy policy for users and general platform usage.
             </p>
           </div>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="h-9 px-4 rounded-lg bg-accent-red hover:bg-red-600 disabled:opacity-50 text-white text-sm font-medium flex items-center gap-2 transition-colors"
+            className="h-9 px-4 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-medium flex items-center gap-2 transition-colors" // Changed from accent-red
           >
             {saving ? (
               <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
@@ -107,27 +107,27 @@ export default function PrivacyPage() {
 
         {/* Tabs */}
         <div className="flex gap-1 mb-5 bg-bg-card border border-border-subtle rounded-xl p-1 w-fit">
-          {(["doctor", "patient"] as const).map((tab) => (
+          {(["user", "general"] as const).map((tab) => ( // Changed tab names
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-5 py-2 rounded-lg text-sm font-medium transition-all capitalize ${
                 activeTab === tab
-                  ? "bg-accent-red text-white shadow"
+                  ? "bg-blue-600 text-white shadow" // Changed from accent-red
                   : "text-text-muted hover:text-text-primary"
               }`}
             >
-              {tab === "doctor" ? "Doctors" : "Patients"}
+              {tab === "user" ? "Users" : "General"}
             </button>
           ))}
         </div>
 
         <div className="bg-bg-card border border-border-subtle rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3 border-b border-border-subtle">
-            <p className="text-text-muted text-xs uppercase tracking-wider">
-              Privacy &amp; Policy for {activeTab === "doctor" ? "Doctors" : "Patients"}
+            <p className="text-text-muted text-xs uppercase tracking-wider"> 
+              Privacy &amp; Policy for {activeTab === "user" ? "Users" : "General Platform"}
             </p>
-            <p className="text-text-muted text-xs">{contents[activeTab].length} characters</p>
+            <p className="text-text-muted text-xs">{contents[activeTab as "user" | "general"].length} characters</p>
           </div>
           {loadingContent ? (
             <div className="flex items-center justify-center h-40 text-text-muted text-sm">
@@ -140,9 +140,9 @@ export default function PrivacyPage() {
           ) : (
             <RichTextEditor
               key={activeTab}
-              content={contents[activeTab]}
-              onChange={(html) => setContents((p) => ({ ...p, [activeTab]: html }))}
-              placeholder={`Enter Privacy & Policy for ${activeTab === "doctor" ? "doctors" : "patients"}...`}
+              content={contents[activeTab as "user" | "general"]}
+              onChange={(html) => setContents((p) => ({ ...p, [activeTab as "user" | "general"]: html }))}
+              placeholder={`Enter Privacy & Policy for ${activeTab === "user" ? "users" : "general platform"}...`}
             />
           )}
         </div>
