@@ -1,11 +1,12 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(curl -s \"https://social-platform-backend-a4zd.onrender.com/api/admin/users/6a04602c5410f870d33ff337/reported-posts?page=1&limit=10\")"
+    ]
+  },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "code-review-graph"
-  ],
-  "permissions": {
-    "allow": [
-      "Bash(npm install *)"
-    ]
-  }
+  ]
 }
