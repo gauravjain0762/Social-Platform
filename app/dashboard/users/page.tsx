@@ -132,14 +132,14 @@ export default function UsersPage() {
           <>
             <div className="bg-[#0f0f0f] border border-[#1e1e1e] rounded-2xl overflow-hidden">
               {/* TABLE HEAD */}
-              <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_auto] gap-4 px-5 py-3 border-b border-[#1a1a1a] text-[11px] uppercase tracking-wider text-gray-600 font-medium">
+              <div className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_80px] gap-4 px-5 py-3 border-b border-[#1a1a1a] text-[11px] uppercase tracking-wider text-gray-600 font-medium">
                 <span>User</span>
                 <span>Email</span>
                 <span>Membership</span>
                 <span>Plan</span>
                 <span>Verified</span>
                 <span>Joined</span>
-                <span></span>
+                <span>Actions</span>
               </div>
 
               {/* TABLE ROWS */}
@@ -166,7 +166,7 @@ export default function UsersPage() {
                   return (
                     <div
                       key={user._id}
-                      className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_auto] gap-4 px-5 py-3.5 items-center hover:bg-white/[0.02] transition"
+                      className="grid grid-cols-[2fr_2fr_1fr_1fr_1fr_1fr_80px] gap-4 px-5 py-3.5 items-center hover:bg-white/[0.02] transition"
                     >
                       {/* USER */}
                       <div className="flex items-center gap-3 min-w-0">
